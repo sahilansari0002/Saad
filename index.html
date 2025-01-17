@@ -359,31 +359,36 @@
       </div>
     </section>
     
-    <!-- Add JavaScript below -->
-    <script>
-      // Handle hover effect for desktop
-      const videos = document.querySelectorAll('.portfolio-video');
-      videos.forEach(video => {
-        video.addEventListener('mouseenter', () => {
-          video.play();
-        });
-        video.addEventListener('mouseleave', () => {
-          video.pause();
-        });
-      });
-    
-      // Handle click event for mobile devices (to play video on click)
-      videos.forEach(video => {
-        video.addEventListener('click', () => {
-          if (video.paused) {
-            video.play();
-          } else {
-            video.pause();
+   <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const videos = document.querySelectorAll('.portfolio-video');
+
+    videos.forEach(video => {
+      video.addEventListener('play', () => {
+        // Pause all other videos
+        videos.forEach(otherVideo => {
+          if (otherVideo !== video && !otherVideo.paused) {
+            otherVideo.pause();
           }
         });
       });
-    </script>
-    
+
+      video.addEventListener('click', () => {
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+
+      // Optional: Stop video when it ends (reset for a clean loop)
+      video.addEventListener('ended', () => {
+        video.currentTime = 0; // Reset to the beginning
+      });
+    });
+  });
+</script>
+ 
     <!-- Add CSS below -->
     <style>
       /* CSS to ensure the video container has correct styling */
